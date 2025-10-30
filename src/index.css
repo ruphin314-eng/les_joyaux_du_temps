@@ -1,0 +1,391 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Outfit:wght@100..900&family=Prata&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+a.active hr{
+    display: block;
+}
+
+*{
+    font-family: Outfit;
+}
+
+.prata-regular {
+  font-family: "Prata", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+::-webkit-scrollbar{
+  display: none;
+}
+
+body {
+  @apply bg-pink-100;
+}
+
+@media (max-width:640px) {
+    a.active{
+      background-color: black;
+      color: white;
+    }
+
+}
+
+
+/* === PRODUCT CARD ANIMÉE === */
+.product-card {
+  position: relative;
+  display: block;
+  background: #fff;
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-8px) rotateZ(-1deg);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* === IMAGE PRODUIT === */
+.product-image {
+  width: 100%;
+  border-radius: 1rem;
+  filter: brightness(0.95) contrast(1.05);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              filter 0.6s ease;
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.1) rotateZ(1deg);
+  filter: brightness(1.05) contrast(1.15);
+}
+
+/* Reflet luxueux animé */
+.product-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  pointer-events: none;
+}
+
+.product-card:hover::after {
+  animation: shine 1.2s forwards;
+}
+
+@keyframes shine {
+  0% { left: -75%; }
+  100% { left: 125%; }
+}
+
+/* === INFOS PRODUIT === */
+.product-info {
+  margin-top: 0.3rem;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-info {
+  transform: translateY(-2px);
+}
+
+/* === NOM DU PRODUIT === */
+.product-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 0.2rem;
+  transition: color 0.3s ease;
+}
+
+.product-card:hover .product-name {
+  color: #111;
+}
+
+/* === PRIX ANIMÉ === */
+.product-price {
+  color: #d4af37;
+  font-weight: 600;
+  position: relative;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.product-price::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, #d4af37, #f7e9b1);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.product-card:hover .product-price::after {
+  width: 100%;
+}
+
+.product-card:hover .product-price {
+  transform: scale(1.1);
+  color: #f5c542;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+/* Pulse léger pour le prix */
+@keyframes pulse {
+  0%, 100% { transform: scale(1.05); }
+  50% { transform: scale(1.15); }
+}
+
+/* Halo subtil autour de la carte */
+.product-card::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 1.2rem;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0);
+  transition: box-shadow 0.4s ease;
+  pointer-events: none;
+}
+
+.product-card:hover::before {
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
+}
+
+/* -------------------- BOUTON AJOUTER AU PANIER -------------------- */
+.add-to-cart {
+  padding: 0.75rem 1.5rem;
+  background-color: #1F2937;
+  color: white;
+  border-radius: 9999px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.add-to-cart:hover {
+  background-color: #111827;
+  transform: scale(1.05);
+}
+
+/* -------------------- TRANSITION CONTAINER -------------------- */
+.transition-container {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.7s ease-out;
+}
+
+.transition-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Galerie d'images produit --- */
+.gallery-container {
+  scrollbar-width: thin;
+  scrollbar-color: #f9a8d4 #f1f1f1; /* Rose clair sur fond gris */
+  transition: all 0.4s ease-in-out;
+}
+
+.gallery-container:hover {
+  transform: scale(1.01);
+}
+
+/* Style de chaque image miniature */
+.gallery-image {
+  border-radius: 10px;
+  transition: all 0.3s ease-in-out;
+  filter: brightness(0.95);
+}
+
+.gallery-image:hover {
+  transform: scale(1.1) rotate(1deg);
+  filter: brightness(1.1);
+  box-shadow: 0 8px 16px rgba(255, 105, 180, 0.3); /* ombre rose */
+  border: 2px solid #ec4899; /* Rose vif (tailwind pink-500) */
+}
+
+/* Petit effet de clic */
+.gallery-image:active {
+  transform: scale(0.95);
+  filter: brightness(0.8);
+}
+
+.gallery-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transform: skewX(-25deg);
+}
+
+.gallery-image:hover::after {
+  animation: shine 1s forwards;
+}
+
+@keyframes shine {
+  0% { left: -75%; }
+  100% { left: 125%; }
+}
+
+/* --- Image principale du produit --- */
+.main-image-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  transition: all 0.5s ease-in-out;
+}
+
+/* Animation d’apparition douce à chaque changement */
+.main-product-image {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  object-fit: cover;
+  animation: fadeZoomIn 0.6s ease-in-out;
+  transition: transform 0.5s ease, box-shadow 0.4s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Zoom et lueur rose au survol */
+.main-product-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 25px rgba(236, 72, 153, 0.4); /* rose-500 */
+  filter: brightness(1.05);
+}
+
+/* Effet de brillance subtile */
+.main-image-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -70%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transform: skewX(-25deg);
+  opacity: 0;
+}
+
+.main-image-container:hover::after {
+  opacity: 1;
+  animation: shine 1s forwards;
+}
+
+/* --- Animations --- */
+@keyframes fadeZoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shine {
+  0% { left: -70%; }
+  100% { left: 120%; }
+}
+
+/* --- selectionne details --- */
+.select-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1F2937; /* rose-500 */
+  margin-bottom: 0.5rem;
+  animation: fadeSlideIn 0.6s ease-in-out;
+}
+
+/* --- Conteneur des boutons --- */
+.details-container {
+  animation: fadeSlideIn 0.8s ease-in-out;
+}
+
+/* --- Boutons --- */
+.detail-btn {
+  border: 2px solid #f3f4f6; /* gris clair */
+  background: #f9fafb;
+  color: #374151;
+  padding: 0.6rem 1.2rem;
+  border-radius: 9999px; /* arrondi complet */
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  position: relative;
+}
+
+/* Effet au survol */
+.detail-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  border-color: #f9a8d4; /* rose clair */
+  box-shadow: 0 6px 12px rgba(236, 72, 153, 0.25);
+  color: #ec4899;
+}
+
+/* État actif (sélectionné) */
+.detail-btn.active {
+  background: linear-gradient(135deg, #f9a8d4, #ec4899);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 6px 15px rgba(236, 72, 153, 0.4);
+  transform: scale(1.05);
+}
+
+/* Brillance subtile sur le bouton actif */
+.detail-btn.active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transform: skewX(-25deg);
+  animation: shine 1s forwards;
+}
+
+/* --- Animations --- */
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shine {
+  0% { left: -60%; }
+  100% { left: 120%; }
+}
+
+
