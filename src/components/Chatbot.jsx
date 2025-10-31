@@ -25,7 +25,7 @@ const Chatbot = () => {
     setTyping(true);
 
     try {
-      const res = await fetch("https://server-1-wsc6.onrender.com", {
+      const res = await fetch("https://server-2-7p13.onrender.com", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input }),
